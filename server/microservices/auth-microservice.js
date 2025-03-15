@@ -6,7 +6,7 @@ import config from '../config.js';
 import Student from './models/student.model.js';  // Correct import syntax
 
 const app = express();
-const port = 3001;
+const port = 3004;
 const cors = require('cors');
 app.use(cors());
 

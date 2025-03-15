@@ -6,7 +6,7 @@ const { buildFederatedSchema } = require('@apollo/federation');
 const express = require('express');
 const app = express();
 // Define the port
-const port = 3002;
+const port = 3003;
 const cors = require('cors');
 // Enable CORS
 app.use(cors());
