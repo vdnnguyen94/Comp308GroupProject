@@ -1,24 +1,21 @@
-import { ApolloServer, gql } from 'apollo-server-express';
-import { buildFederatedSchema } from '@apollo/federation';
-import express from 'express';
-import mongoose from 'mongoose';
-import config from '../config.js'; 
-import Student from './models/student.model.js';  // Correct import syntax
+const { ApolloServer, gql } = require('apollo-server-express');
+const { buildSubgraphSchema } = require('@apollo/federation');
+const express = require('express');
+const mongoose = require('mongoose');
+const config = require('../config.js');  // Corrected require
+const Student = require('./models/student.model.js');  // Corrected require
 
 const app = express();
 const port = 3001;
 const cors = require('cors');
 app.use(cors());
 
-console.log("Config MongoUERi: ", config.mongoUri);
+
 
 mongoose.connect(config.mongoUri, { dbName: 'SchoolSystem' })
   .then(() => {
     console.log("SUCCESS Connected to MongoDB:", config.mongoUri);
     console.log("Using Database:", mongoose.connection.db.databaseName); 
-
-    // Directly call listStudents resolver
-    listStudentsResolver();
   })
   .catch(err => {
     console.error("ERROR MongoDB connection error:", err);
@@ -39,6 +36,7 @@ const typeDefs = gql`
         login(studentNumber: String!, password: String!): String
     }
     type Student {
+        id: ID
         studentNumber: String
         firstName: String
         lastName: String
@@ -60,10 +58,10 @@ const resolvers = {
         _dummy: () => 'This is a dummy query',
         
         listStudents: async () => {
-            console.log("listStudents resolver called");  // Debugging log
+            // console.log("listStudents resolver called");  // Debugging log
             try {
                 const students = await Student.find();  // Fetch all students
-                console.log("Fetched students:", students);  // Debugging log
+                // console.log("Fetched students:", students);  // Debugging log
                 return students;
             } catch (err) {
                 console.error("Error fetching students:", err);  // Error logging
@@ -98,21 +96,10 @@ const resolvers = {
     }
 };
 
-// Function to directly call the listStudents resolver
-async function listStudentsResolver() {
-    try {
-        console.log("listStudentsResolver called");
-        // Directly fetch students using the Student model
-        const students = await Student.find();
-        console.log("Fetched students directly:", students);  // Log the result
-    } catch (err) {
-        console.error("Error in listStudentsResolver:", err);
-    }
-}
 
 // Create a new ApolloServer instance, and pass in your schema and resolvers
 const server = new ApolloServer({
-    schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+    schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
 app.listen(process.env.PORT || port, async () => {

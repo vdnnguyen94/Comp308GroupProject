@@ -1,0 +1,38 @@
+mutation {
+  login(studentNumber: "101", password: "qwe123") 
+
+}
+query {
+  getStudent(studentNumber: "101") {
+    studentNumber
+    firstName
+    lastName
+    address
+    city
+    phoneNumber
+    email
+    program
+    hobbies
+    techSkills
+    isAdmin
+    created
+    updated
+  }
+}
+query {
+  listStudents {
+    studentNumber
+    firstName
+    lastName
+    address
+    city
+    phoneNumber
+    email
+    program
+    hobbies
+    techSkills
+    isAdmin
+    created
+    updated
+  }
+}
