@@ -1,0 +1,56 @@
+{
+  listVitalSigns {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+query {
+  getVitalSign(userId: "101") {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+
+mutation {
+  createVitalSign(userId: "101", heartRate: 75, bloodPressure: "120/80", temperature: 98.6) {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+mutation {
+  createVitalSign(userId: "102", heartRate: 85, bloodPressure: "130/85", temperature: 99.1) {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+mutation {
+  createVitalSign(userId: "103", heartRate: 95, bloodPressure: "140/90", temperature: 100.2) {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+mutation {
+  createVitalSign(userId: "104", heartRate: 70, bloodPressure: "110/70", temperature: 98.4) {
+    userId
+    heartRate
+    bloodPressure
+    temperature
+    timestamp
+  }
+}
+

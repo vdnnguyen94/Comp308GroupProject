@@ -10,8 +10,9 @@ const app = express();
 const gateway = new ApolloGateway({
   serviceList: [
     { name: 'student', url: 'http://localhost:3001/graphql' },
-    { name: 'products', url: 'http://localhost:3002/graphql' },
-    { name: 'auth', url: 'http://localhost:3003/graphql' }
+    { name: 'vitalSigns', url: 'http://localhost:3002/graphql' },
+    { name: 'products', url: 'http://localhost:3003/graphql' },
+    { name: 'auth', url: 'http://localhost:3004/graphql' }
     // Additional services can be listed here
   ],
 });
