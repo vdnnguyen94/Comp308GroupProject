@@ -6,9 +6,10 @@
   "scripts": {
     "start:product": "node ./microservices/product-microservice.js",
     "start:student": "node ./microservices/student-microservice.js",
+    "start:vital": "node ./microservices/vitalSigns-microservice.js",
     "start:auth": "node ./microservices/auth-microservice.js",
     "start:gateway": "node ./gateway.js",
-    "start:all": "npm-run-all --parallel start:product start:auth start:gateway"
+    "start:all": "npm-run-all --parallel start:student start:vital start:product start:auth start:gateway"
   },
   "keywords": [],
   "author": "",
