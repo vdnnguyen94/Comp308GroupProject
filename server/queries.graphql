@@ -1,5 +1,7 @@
 mutation {
-  login(studentNumber: "101", password: "qwe123") 
+  login(studentNumber: "101", password: "qwe123") {
+    message
+  }
 
 }
 query {

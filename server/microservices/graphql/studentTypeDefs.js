@@ -11,7 +11,7 @@ const studentTypeDefs = gql`
     login(studentNumber: String!, password: String!): LoginResponse
   }
 
-  type Student {
+  type Student @key(fields: "studentNumber") {
     id: ID
     studentNumber: String
     firstName: String

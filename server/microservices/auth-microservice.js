@@ -16,16 +16,11 @@ const typeDefs = gql`
   type Query {
     _dummy: String
   }
-  type Mutation {
-    login(username: String!, password: String!): String
-  }
+
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
-  Mutation: {
-    login: () => 'User authenticated',
-  },
   Query: {
     // Dummy resolver for the dummy Query
     _dummy: () => 'This is a dummy query',

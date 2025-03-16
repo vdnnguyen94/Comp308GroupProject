@@ -1,5 +1,6 @@
 const { ApolloServer } = require('apollo-server-express');
 const { buildSubgraphSchema } = require('@apollo/federation');
+const { buildFederatedSchema } = require('@apollo/federation');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -26,7 +27,7 @@ mongoose.connection.on('error', () => {
 
 // Create an Apollo Server for the VitalSigns service
 const server = new ApolloServer({
-  schema: buildSubgraphSchema([{ typeDefs: vitalSignsTypeDefs, resolvers: vitalSignsResolvers }]),
+  schema: buildFederatedSchema([{ typeDefs: vitalSignsTypeDefs, resolvers: vitalSignsResolvers }]),
 });
 
 server.start().then(() => {

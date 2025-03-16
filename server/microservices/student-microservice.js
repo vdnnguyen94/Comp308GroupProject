@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server-express');
 const { buildSubgraphSchema } = require('@apollo/federation');
+const { buildFederatedSchema } = require('@apollo/federation');
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('../config.js');  // Corrected require
@@ -30,9 +31,12 @@ mongoose.connection.on('error', () => {
 
 // Create a new ApolloServer instance, and pass in your schema and resolvers
 const server = new ApolloServer({
-    typeDefs: studentTypeDefs,  
-    resolvers: studentResolvers,
-  });
+  schema: buildSubgraphSchema([{ typeDefs: studentTypeDefs, resolvers: studentResolvers }]),
+});
+// const server = new ApolloServer({
+//     typeDefs: studentTypeDefs,  
+//     resolvers: studentResolvers,
+//   });
 
 app.listen(process.env.PORT || port, async () => {
     await server.start();
