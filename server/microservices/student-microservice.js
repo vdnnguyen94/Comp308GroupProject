@@ -31,7 +31,7 @@ mongoose.connection.on('error', () => {
 
 // Create a new ApolloServer instance, and pass in your schema and resolvers
 const server = new ApolloServer({
-  schema: buildSubgraphSchema([{ typeDefs: studentTypeDefs, resolvers: studentResolvers }]),
+  schema: buildFederatedSchema([{ typeDefs: studentTypeDefs, resolvers: studentResolvers }]),
 });
 // const server = new ApolloServer({
 //     typeDefs: studentTypeDefs,  
