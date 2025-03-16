@@ -1,0 +1,25 @@
+.student-list-container {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+background-color: #f9f9f9;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-list-container h2 {
+color: #333;
+}
+
+.card {
+border: none;
+}
+
+.list-group-item {
+border: none;
+border-bottom: 1px solid #ddd;
+}
+
+.list-group-item:last-child {
+border-bottom: none;
+}

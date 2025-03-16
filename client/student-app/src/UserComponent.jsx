@@ -25,7 +25,7 @@ const UserComponent = () => {
     e.preventDefault();
     // Call the login mutation
     login({ variables: { username, password } }).finally(() => {
-      // Navigate to the student list page regardless of the login result
+      // Temporary: Navigate to the student list page regardless of the login result
       navigate('/students');
     });
   };
