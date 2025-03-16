@@ -1,3 +1,4 @@
+// server/microservices/vitalSigns-microservice.js
 const { ApolloServer } = require('apollo-server-express');
 const { buildSubgraphSchema } = require('@apollo/federation');
 const { buildFederatedSchema } = require('@apollo/federation');

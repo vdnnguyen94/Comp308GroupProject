@@ -1,3 +1,4 @@
+// server/microservices/graphql/vitalSignsResolver.js
 const VitalSigns = require('../models/VitalSigns.model.js'); // Model for VitalSigns
 
 const vitalSignsResolvers = {

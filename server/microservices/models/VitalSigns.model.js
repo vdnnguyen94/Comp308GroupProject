@@ -1,4 +1,4 @@
-// vital-signs-microservice/models/VitalSigns.js
+// server/microservices/models/VitalSigns.model.js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

@@ -1,4 +1,3 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
@@ -7,10 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: 'userApp',
+      name: 'vitalSignApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './UserComponent': './src/UserComponent',
+        './VitalSigns': './src/VitalSigns',
       },
       shared: ['react', 'react-dom', '@apollo/client', 'graphql'],
     }),

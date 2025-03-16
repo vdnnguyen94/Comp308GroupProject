@@ -1,3 +1,4 @@
+// server/microservices/graphql/vitalSignsTypeDefs.js
 const { gql } = require('apollo-server-express');
 
 const vitalSignsTypeDefs = gql`

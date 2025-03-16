@@ -1,11 +1,12 @@
 // App.jsx
 import './App.css';
-import UserComponent from './UserComponent';
+import VitalSigns from './VitalSigns';
 
 function App() {
   return (
-    <div className='App'>
-      <UserComponent />
+    <div>
+      <h1>Health System</h1>
+      <VitalSigns />
     </div>
   );
 }
