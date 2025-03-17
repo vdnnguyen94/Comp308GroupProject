@@ -9,7 +9,7 @@ export default defineConfig({
       name: 'vitalSignApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './VitalSigns': './src/VitalSigns',
+        './App': './src/App',
       },
       shared: ['react', 'react-dom', '@apollo/client', 'graphql'],
     }),
