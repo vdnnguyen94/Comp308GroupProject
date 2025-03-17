@@ -9,8 +9,7 @@ export default defineConfig({
       name: 'studentApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './UserComponent': './src/UserComponent',
-        './StudentList': './src/StudentList',
+        './App': './src/App',
       },
       shared: ['react', 'react-dom', '@apollo/client', 'graphql'],
     }),

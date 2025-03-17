@@ -11,6 +11,9 @@ yarn-error.log*
 /node_modules/
 /client/node_modules/
 /client/student-app/node_modules/
+/client/vital-sign-app/node_modules/
+/client/shell-app/node_modules/
+/client/user-app/node_modules/
 /server/node_modules/
 
 
