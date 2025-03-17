@@ -10,7 +10,9 @@ yarn-error.log*
 # Dependency directories
 /node_modules/
 /client/node_modules/
+/client/student-app/node_modules/
 /server/node_modules/
+
 
 # Build directories
 /build/
