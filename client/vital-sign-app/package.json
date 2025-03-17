@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite  --port=3002 --strictPort",
+    "dev": "vite  --port=3011 --strictPort",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview --port=3002 --strictPort",
+    "preview": "vite preview --port=3011 --strictPort",
     "deploy": "npm run build && npm run preview"
   },
   "dependencies": {
