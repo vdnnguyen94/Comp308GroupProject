@@ -9,7 +9,8 @@ export default defineConfig({
     federation({
       name: 'shellApp',
       remotes: {
-        userApp: 'http://localhost:3010/assets/remoteEntry.js',
+        studentApp: 'http://localhost:3010/assets/remoteEntry.js',
+        vitalSignApp: 'http://localhost:3011/assets/remoteEntry.js',
       },
       shared: ['react', 'react-dom', '@apollo/client', 'graphql'],
     }),

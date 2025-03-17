@@ -10,8 +10,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const UserComponent = lazy(() => import('userApp/App'));
-
+const StudentApp = lazy(() => import('studentApp/App'));
+const VitalApp = lazy(() => import('vitalSignApp/App'));
 function App() {
   return (
     <ApolloProvider client={client}> {/* Wrap your app or relevant parts with ApolloProvider */}
@@ -19,7 +19,8 @@ function App() {
         <header className='App-header'>
           <h1>Shell Application</h1>
           <Suspense fallback={<div>Loading User Component...</div>}>
-            <UserComponent />
+            <StudentApp />
+            <VitalApp />
           </Suspense>
         </header>
       </div>
