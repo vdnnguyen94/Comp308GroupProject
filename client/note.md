@@ -29,3 +29,9 @@ Then, run the user-app micro frontend using: npm run deploy
 
 And finally, run the shell-app using: npm run dev
 ```
+
+```
+Port 3000 for gateways
+Port 3001-3005 for microservices
+Port 3010-3015 for microfrontends
+```
