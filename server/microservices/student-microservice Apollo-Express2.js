@@ -39,7 +39,6 @@ app.use(cors());
 const corsOptions = {
   origin: 'https://studio.apollographql.com',  // Apollo Sandbox URL
   credentials: true,  // Allow credentials (cookies) to be sent with the request
-  exposedHeaders: ['Set-Cookie'],
 };
 
 app.use(cors(corsOptions));
