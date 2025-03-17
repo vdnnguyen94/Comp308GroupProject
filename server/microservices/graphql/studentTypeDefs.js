@@ -5,10 +5,12 @@ const studentTypeDefs = gql`
     _dummy: String
     listStudents: [Student]
     getStudent(studentNumber: String!): Student
+    isLoggedIn: AuthStatus
   }
 
   type Mutation {
     login(studentNumber: String!, password: String!): LoginResponse
+    logOut: LoginResponse
   }
 
   type Student @key(fields: "studentNumber") {
@@ -30,6 +32,10 @@ const studentTypeDefs = gql`
 
   type LoginResponse {
     message: String
+  }
+  type AuthStatus {
+    isLoggedIn: Boolean
+    studentNumber: String
   }
 `;
 
