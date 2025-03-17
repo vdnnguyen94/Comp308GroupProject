@@ -10,7 +10,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const UserComponent = lazy(() => import('userApp/UserComponent'));
+const UserComponent = lazy(() => import('userApp/App'));
 
 function App() {
   return (
