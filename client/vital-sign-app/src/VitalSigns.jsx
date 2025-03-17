@@ -84,42 +84,50 @@ const VitalSigns = () => {
     <div className="vital-signs-container container">
       <h2 className="text-center mb-4">Vital Signs</h2>
       <div className="card p-4 mb-4">
-        <div className="form-group mb-3">
-          <label>User ID</label>
-          <input
-            type="text"
-            className="form-control"
-            value={form.userId}
-            onChange={(e) => setForm({ ...form, userId: e.target.value })}
-          />
+        <div className="form-group row mb-3">
+          <label className="col-sm-4 col-form-label">User ID</label>
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              value={form.userId}
+              onChange={(e) => setForm({ ...form, userId: e.target.value })}
+            />
+          </div>
         </div>
-        <div className="form-group mb-3">
-          <label>Heart Rate</label>
-          <input
-            type="number"
-            className="form-control"
-            value={form.heartRate}
-            onChange={(e) => setForm({ ...form, heartRate: parseInt(e.target.value) })}
-          />
+        <div className="form-group row mb-3">
+          <label className="col-sm-4 col-form-label">Heart Rate</label>
+          <div className="col-sm-8">
+            <input
+              type="number"
+              className="form-control"
+              value={form.heartRate}
+              onChange={(e) => setForm({ ...form, heartRate: parseInt(e.target.value) })}
+            />
+          </div>
         </div>
-        <div className="form-group mb-3">
-          <label>Blood Pressure</label>
-          <input
-            type="text"
-            className="form-control"
-            value={form.bloodPressure}
-            onChange={(e) => setForm({ ...form, bloodPressure: e.target.value })}
-          />
+        <div className="form-group row mb-3">
+          <label className="col-sm-4 col-form-label">Blood Pressure</label>
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              value={form.bloodPressure}
+              onChange={(e) => setForm({ ...form, bloodPressure: e.target.value })}
+            />
+          </div>
         </div>
-        <div className="form-group mb-3">
-          <label>Temperature</label>
-          <input
-            type="number"
-            step="0.1"
-            className="form-control"
-            value={form.temperature}
-            onChange={(e) => setForm({ ...form, temperature: parseFloat(e.target.value) })}
-          />
+        <div className="form-group row mb-3">
+          <label className="col-sm-4 col-form-label">Temperature</label>
+          <div className="col-sm-8">
+            <input
+              type="number"
+              step="0.1"
+              className="form-control"
+              value={form.temperature}
+              onChange={(e) => setForm({ ...form, temperature: parseFloat(e.target.value) })}
+            />
+          </div>
         </div>
         <button
           className="btn btn-primary w-100"

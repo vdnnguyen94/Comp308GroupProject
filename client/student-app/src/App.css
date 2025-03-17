@@ -6,6 +6,11 @@ body, html {
   flex-direction: column;
 }
 
+.content-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -24,4 +29,16 @@ body, html {
 
 .flex-grow-1 {
   flex-grow: 1;
+  padding: 20px; 
+}
+
+.navbar {
+  position: sticky; 
+  top: 0;
+  z-index: 999; 
+}
+
+.my-4 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

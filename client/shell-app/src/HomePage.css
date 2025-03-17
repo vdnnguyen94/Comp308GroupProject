@@ -1,0 +1,18 @@
+.home-page-container {
+  padding: 50px;
+  width: 85%;
+}
+
+.home-page-container h1 {
+  margin-bottom: 20px;
+}
+
+.home-page-container p {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.home-page-container .btn {
+  padding: 0.5rem 2rem; 
+  font-size: 1.1rem; 
+}

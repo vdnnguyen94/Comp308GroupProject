@@ -17,7 +17,6 @@ const GET_STUDENTS_QUERY = gql`
 `;
 
 const StudentList = () => {
-  // useQuery hook for the get students query
   const { loading, error, data } = useQuery(GET_STUDENTS_QUERY);
 
   if (loading) return <p>Loading...</p>;
