@@ -3,11 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 
 // Set up Apollo Client
+const graphqlLink = createHttpLink({
+  uri: 'http://localhost:3001/graphql', 
+  //credentials: 'include', 
+});
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql', // Set this to your actual GraphQL endpoint
+  link: graphqlLink,
   cache: new InMemoryCache(),
 });
 

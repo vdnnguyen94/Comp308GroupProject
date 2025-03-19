@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const config = require('../config.js');  // Corrected require
 const studentTypeDefs = require('./graphql/studentTypeDefs.js'); 
 const studentResolvers = require('./graphql/studentResolver.js');
+const { expressMiddleware } = require('@apollo/server/express4');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
@@ -13,9 +14,30 @@ const port = 3001;
 const cors = require('cors');
 
 const app = express();
+app.use(express.json());
+// app.use((req, res, next) => {
+//   // Set the necessary CORS headers
+//   res.header("Access-Control-Allow-Origin", "https://studio.apollographql.com");  
+//   res.header("Access-Control-Allow-Credentials", "true"); 
+//   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");  
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With"); 
+
+//   // Pass to the next middleware (Apollo Server will handle the request after this)
+//   next();
+// });
+const allowedOrigins = [
+  'http://localhost:3010', 
+  'http://localhost:3015', 
+  'http://localhost:4000', 
+  'https://studio.apollographql.com',
+];
 app.use((req, res, next) => {
+  const origin = req.headers.origin;  
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);  // Set the allowed origin dynamically
+  }
   // Set the necessary CORS headers
-  res.header("Access-Control-Allow-Origin", "https://studio.apollographql.com");  
+
   res.header("Access-Control-Allow-Credentials", "true"); 
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");  
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With"); 
@@ -23,21 +45,13 @@ app.use((req, res, next) => {
   // Pass to the next middleware (Apollo Server will handle the request after this)
   next();
 });
-// Cookie setup with SameSite=None; Secure
-app.use((req, res, next) => {
-  res.cookie('my_cookie', 'cookie_value', {
-    httpOnly: true,
-    secure: false,  // Ensure HTTPS is used
-    sameSite: 'None',  // Allow cross-origin cookie usage
-  });
-  next();
-});
+
 app.use(cookieParser());
 app.use(cors());
 
 
 const corsOptions = {
-  origin: 'https://studio.apollographql.com',  // Apollo Sandbox URL
+  origin: ['http://localhost:3010','http://localhost:3015', 'http://localhost:4000', 'https://studio.apollographql.com'], // Apollo Sandbox URL
   credentials: true,  // Allow credentials (cookies) to be sent with the request
 };
 
@@ -58,6 +72,7 @@ mongoose.connection.on('error', () => {
 
 
 const context = ({ req, res }) => {
+  console.log("Cookies in Microservice:", req.cookies);
   const token = req.cookies.SchoolSystem;  // Get token from cookies
   let user = null;
 
@@ -77,6 +92,10 @@ const context = ({ req, res }) => {
 // Create a new ApolloServer instance, and pass in your schema and resolvers
 const server = new ApolloServer({
   schema: buildFederatedSchema([{ typeDefs: studentTypeDefs, resolvers: studentResolvers }]),
+  cors: { 
+    origin: allowedOrigins,  
+    credentials: true,  
+  },
   context,
 });
 // const server = new ApolloServer({
@@ -86,7 +105,7 @@ const server = new ApolloServer({
 
 async function startServer() {
   await server.start();
-  server.applyMiddleware({ app, path: '/graphql' });
+  server.applyMiddleware({ app, cors: corsOptions });
 
   app.listen(port, () => {
     console.log(`Server ready at http://localhost:${port}/graphql`);

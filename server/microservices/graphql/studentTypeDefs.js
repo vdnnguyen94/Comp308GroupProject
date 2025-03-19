@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('graphql-tag');
 
 const studentTypeDefs = gql`
   type Query {
@@ -6,6 +6,7 @@ const studentTypeDefs = gql`
     listStudents: [Student]
     getStudent(studentNumber: String!): Student
     isLoggedIn: AuthStatus
+    getStudentByToken(studentNumber: String!): Student
   }
 
   type Mutation {

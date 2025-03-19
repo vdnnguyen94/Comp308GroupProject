@@ -4,16 +4,13 @@ const config = require('../../config.js');
 
 const studentResolvers = {
   Query: {
-    _dummy: () => 'This is a dummy query',
-
     listStudents: async () => {
       try {
-        return await Student.find();  // Fetch all students
+        return await Student.find();
       } catch (err) {
         throw new Error('Error fetching students');
       }
     },
-
     getStudent: async (_, { studentNumber }) => {
       try {
         const student = await Student.findOne({ studentNumber });
@@ -23,17 +20,30 @@ const studentResolvers = {
         throw new Error('Error fetching student');
       }
     },
-    isLoggedIn: (_, __, { user, req }) => {
-      console.log("Debug")
-      // console.log("Request object:", req);
-      // Log the cookies to see if they are correctly sent
-      console.log("Cookies in the request:", req.cookies);
-      // Log the user object to verify it's set correctly
-      console.log("User object from context:", user);
+    isLoggedIn: (root, args, context) => {
+      console.log("Debug: context" , context.user);
+      console.log("Debug: context.user is", context.user);
       return {
-        isLoggedIn: !!user,
-        studentNumber: user ? user.studentNumber : null,
+        isLoggedIn: !!context.user,
+        studentNumber: context.user ? context.user.studentNumber : null
       };
+    },
+    getStudentByToken: async (_, { studentNumber }, { user }) => {
+      try {
+        if (!user) {
+          throw new Error('Sign in required');
+        }
+        if (user.studentNumber !== studentNumber) {
+          throw new Error('Not Authorized: Token does not match the provided studentNumber');
+        }
+        const student = await Student.findOne({ studentNumber });
+        if (!student) {
+          throw new Error('Student not found');
+        }
+        return student;
+      } catch (err) {
+        throw new Error(err.message || 'Error fetching student');
+      }
     },
   },
   Mutation: {
@@ -44,7 +54,7 @@ const studentResolvers = {
 
         const isAuthenticated = student.authenticate(password);
         if (!isAuthenticated) throw new Error('Invalid password');
-        console.log("Debug JWTSecrete in Login: ", config.jwtSecret);
+
         const token = jwt.sign(
           { _id: student._id, studentNumber: student.studentNumber, isAdmin: student.isAdmin || false },
           config.jwtSecret,
@@ -52,25 +62,27 @@ const studentResolvers = {
         );
 
         if (!res) {
-          console.log(" NO RESS in Login");
           throw new Error("Response object is missing in context");
         }
-        // Set JWT as HTTP-only cookie
+
         res.cookie('SchoolSystem', token, {
           httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000, // 1 day
-          path: '/',
-        });
-        console.log('Generated token:', token);
-        console.log("COOKIE SET");
+          maxAge: 24 * 60 * 60 * 1000,
+          path: "/",
+          secure: false,
+          // domain: 'localhost',
+          // sameSite: 'None',
 
+        });
+        console.log("SUCCESSFULLY LOGIN STUDENT: ", studentNumber);
+        console.log("COOKIE SET");
         return { message: 'Login successful' };
       } catch (err) {
         return { message: err.message };
       }
     },
     logOut: (_, __, { res }) => {
-      res.clearCookie('SchoolSystem'); 
+      res.clearCookie('SchoolSystem');
       return { message: 'Logged out successfully!' };
     },
   },

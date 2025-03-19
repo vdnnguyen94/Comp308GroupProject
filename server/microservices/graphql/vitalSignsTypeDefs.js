@@ -1,5 +1,5 @@
 // server/microservices/graphql/vitalSignsTypeDefs.js
-const { gql } = require('apollo-server-express');
+const { gql } = require('graphql-tag');
 
 const vitalSignsTypeDefs = gql`
   type Query {

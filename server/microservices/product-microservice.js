@@ -1,15 +1,20 @@
-// server/microservices/product-microservice.js
-// Import ApolloServer and gql
-const { ApolloServer, gql } = require('apollo-server-express');
-const { buildFederatedSchema } = require('@apollo/federation');
-
+const { ApolloServer } = require('@apollo/server');  // Apollo Server 4
+const { buildSubgraphSchema } = require('@apollo/federation');  // Federated schema
 const express = require('express');
 const app = express();
-// Define the port
 const port = 3003;
 const cors = require('cors');
-// Enable CORS
+
+// Import expressMiddleware from @apollo/server/express4
+const { expressMiddleware } = require('@apollo/server/express4');
+
+// Import gql tag from graphql-tag
+const { gql } = require('graphql-tag');
+
 app.use(cors());
+
+// Use express.json() middleware to parse incoming JSON requests before Apollo Server middleware
+app.use(express.json());
 
 // Define your schema
 const typeDefs = gql`
@@ -33,15 +38,23 @@ const resolvers = {
     ],
   },
 };
-// Create a new ApolloServer instance, 
-// and pass in your schema and resolvers
-const server = new ApolloServer({
-  schema: buildFederatedSchema([{ typeDefs, resolvers }]),
-});
-// Apply the Apollo Server middleware to the Express server
-app.listen(process.env.PORT || port, async () => {
-  await server.start();
-  server.applyMiddleware({ app });
-  console.log(`Product microservice ready at http://localhost:${port}${server.graphqlPath}`)
 
+// Create a new ApolloServer instance
+const server = new ApolloServer({
+  schema: buildSubgraphSchema([{ typeDefs, resolvers }]),  // Use federated schema
 });
+
+// Start Apollo Server and apply middleware
+async function startServer() {
+  await server.start();
+  
+  // Use expressMiddleware to integrate Apollo Server with Express
+  app.use('/graphql', expressMiddleware(server));  // Correct integration for Apollo Server 4 with Express
+
+  // Start Express server and log the correct GraphQL path
+  app.listen(port, () => {
+    console.log(`Product microservice ready at http://localhost:${port}/graphql`);
+  });
+}
+
+startServer();

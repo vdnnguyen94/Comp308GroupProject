@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UserComponent from './UserComponent';
 import StudentList from './StudentList';
+import StudentDetail from './StudentDetail';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './App.css'; // Import the CSS file
 
@@ -32,6 +33,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<UserComponent />} />
             <Route path="/students" element={<StudentList />} />
+            <Route path="/students/:studentNumber" element={<StudentDetail />} />
           </Routes>
         </div>
       </div>
