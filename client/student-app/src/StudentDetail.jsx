@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
-import { useParams } from "react-router-dom"; 
+import { useParams, useLocation } from "react-router-dom"; 
 // import { GET_STUDENT_BY_NUMBER } from "./queries"; 
 
 const GET_STUDENT_BY_NUMBER = gql`
@@ -23,10 +23,18 @@ const GET_STUDENT_BY_NUMBER = gql`
 
 const StudentDetail = () => {
   const { studentNumber } = useParams(); 
-  const { data, loading, error } = useQuery(GET_STUDENT_BY_NUMBER, {
+  const { data, loading, error, refetch  } = useQuery(GET_STUDENT_BY_NUMBER, {
     variables: { studentNumber },
   });
+  const { state } = useLocation();
 
+  useEffect(() => {
+    if (state?.fromLogin) { 
+      console.log("Refetching data because user came from login.");
+      refetch(); // Call refetch here if you want to reload the query
+    }
+    refetch(); 
+  }, [state, refetch]);
   if (loading) return <p>Loading student details...</p>;
   if (error) return <p>Error: {error.message}</p>;
 

@@ -12,36 +12,26 @@ const LOGIN_MUTATION = gql`
     }
   }
 `;
-const IS_LOGGED_IN = gql`
-  query {
-    isLoggedIn {
-      isLoggedIn
-      studentNumber
-    }
-  }
-`;
 
-const UserComponent = () => {
+
+const UserComponent = ({ setIsLoggedIn })=> {
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
-  const { refetch } = useQuery(IS_LOGGED_IN, {
-    skip: true, // Skip query execution initially
-  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     login({ variables: { studentNumber, password } })
-      .then(() => {
-        if (data && !error) {
-          console.log('Login successful');
-          // Redirect using window.location.href after successful login
-          refetch().then(() => {
-            // Navigate to the student page after login is successful
-            navigate(`/students/${studentNumber}`);
-          });
-        }
-      })
+    .then((response) => {
+      const message = response?.data?.login?.message;
+      if (message === 'Login successful') {
+        console.log('Login successful');
+        // Navigate to the student page after successful login
+        setIsLoggedIn(true);
+        navigate(`/students/${studentNumber}`, { state: { fromLogin: true } });
+      }
+    })
       .catch((err) => {
         console.error('Login error:', err);
       });

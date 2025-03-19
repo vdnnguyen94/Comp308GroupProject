@@ -1,15 +1,23 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider ,createHttpLink} from '@apollo/client';
 import { Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // Create an instance of ApolloClient
+const graphqlLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql', 
+  credentials: 'include', 
+})
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  link: graphqlLink,
   cache: new InMemoryCache(),
 });
+
+
+// Set up Apollo Client
+;
 
 // Lazy load components for better performance
 const HomePage = lazy(() => import('./HomePage'));

@@ -1,6 +1,7 @@
 import React , { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useQuery, gql , useMutation  } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 import UserComponent from './UserComponent';
 import StudentList from './StudentList';
 import StudentDetail from './StudentDetail';
@@ -36,19 +37,14 @@ const App = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (data) {
-      setIsLoggedIn(data.isLoggedIn.isLoggedIn);
-      setStudentNumber(data.isLoggedIn.studentNumber);
-    }
-  }, [data]);
 
   const handleLogout = async () => {
     try {
       await logout();  // Trigger the logout mutation
       setIsLoggedIn(false);  // Update local state to reflect the logout
       alert("Logged out successfully!");  // Show window alert on successful logout
-      refetch();
+      await refetch(); 
+      window.location.href = '/';
     } catch (err) {
       console.error("Error during logout", err);
     }
@@ -65,6 +61,9 @@ const App = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                  <Link className="nav-link text-white" to="/">Student List</Link>
+                </li>
               {!isLoggedIn ? (
                   <>
                 <li className="nav-item">
@@ -77,7 +76,7 @@ const App = () => {
                 ) : (
                   <>
                 <li className="nav-item">
-                  <Link className="nav-link text-white" to="/">Student List</Link>
+                <Link className="nav-link text-white btn btn-link" to={`/students/${studentNumber}`}>MyAccount</Link>
                 </li>
                 <li className="nav-item">
                       <button className="nav-link text-white btn btn-link" onClick={handleLogout}>Logout</button>
@@ -92,7 +91,7 @@ const App = () => {
 
         <div className="my-4 flex-grow-1">
           <Routes>
-            <Route path="/login" element={<UserComponent />} />
+          <Route path="/login" element={<UserComponent setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/" element={<StudentList />} />
             <Route path="/students/:studentNumber" element={<StudentDetail />} />
           </Routes>
