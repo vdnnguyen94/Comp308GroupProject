@@ -38,8 +38,8 @@ const StudentList = () => {
       <h2 className="text-center mb-4">Student List</h2>
 
       <div className="alert alert-info">
-        {loginData.isLoggedIn ? (
-          <p>You are logged in as Student #{loginData.studentNumber}</p>
+        {loginData.isLoggedIn.isLoggedIn ? (
+          <p>You are logged in as Student #{loginData.isLoggedIn.studentNumber}</p>
         ) : (
           <p>You are not logged in</p>
         )}
