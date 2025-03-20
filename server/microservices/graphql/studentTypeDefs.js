@@ -12,6 +12,22 @@ const studentTypeDefs = gql`
   type Mutation {
     login(studentNumber: String!, password: String!): LoginResponse
     logOut: LoginResponse
+    createStudent(
+      studentNumber: String!
+      firstName: String
+      lastName: String
+      email: String!
+      password: String!
+      address: String
+      city: String
+      phoneNumber: String
+      program: String
+      hobbies: String
+      techSkills: String
+      isAdmin: Boolean
+    ): Student
+
+    deleteStudent(studentNumber: String!): Student
   }
 
   type Student @key(fields: "studentNumber") {

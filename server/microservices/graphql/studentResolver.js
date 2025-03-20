@@ -47,6 +47,45 @@ const studentResolvers = {
     },
   },
   Mutation: {
+    createStudent: async (_, { studentNumber, firstName, lastName, email, password, address, city, phoneNumber, program, hobbies, techSkills, isAdmin }) => {
+      try {
+        const existingStudent = await Student.findOne({ studentNumber });
+        if (existingStudent) {
+          throw new Error('Student with this studentNumber already exists');
+        }
+        
+        const newStudent = new Student({
+          studentNumber,
+          firstName,
+          lastName,
+          email,
+          password,
+          address,
+          city,
+          phoneNumber,
+          program,
+          hobbies,
+          techSkills,
+          isAdmin
+        });
+        
+        await newStudent.save();
+        return newStudent;
+      } catch (err) {
+        throw new Error('Error creating student: ' + err.message);
+      }
+    },
+    deleteStudent: async (_, { studentNumber }) => {
+      try {
+        const student = await Student.findOneAndDelete({ studentNumber });
+        if (!student) {
+          throw new Error('Student not found');
+        }
+        return student;
+      } catch (err) {
+        throw new Error('Error deleting student: ' + err.message);
+      }
+    },
     login: async (_, { studentNumber, password }, { res }) => {
       try {
         const student = await Student.findOne({ studentNumber });

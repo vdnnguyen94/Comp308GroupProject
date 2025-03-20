@@ -29,7 +29,7 @@ const App = () => {
     <ApolloProvider client={client}>
       <Router>
         <div className="app-wrapper">
-          {/* Navigation Bar */}
+          {/* Navigation Bar 
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow w-100">
             <div className="container-fluid">
               <Link className="navbar-brand fw-bold text-white" to="/">
@@ -68,7 +68,9 @@ const App = () => {
               </div>
             </div>
           </nav>
-
+          **/}
+          <StudentApp></StudentApp>
+          <VitalApp></VitalApp>
           {/* Main Content Area */}
           <div className="content-wrapper w-100">
             <div className="content-container">
