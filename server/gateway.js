@@ -16,6 +16,7 @@ app.use(express.json());
 // CORS Setup
 const allowedOrigins = [
   'http://localhost:3010', 
+  'http://localhost:3011', 
   'http://localhost:3015', 
   'http://localhost:4000', 
   'https://studio.apollographql.com',
