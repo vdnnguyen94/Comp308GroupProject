@@ -28,9 +28,9 @@ The \`server/\` folder contains **4 microservices** and **1 GraphQL gateway**.
 To start the server:
 
 
-cd server
-npm install
-npm run start:all
+- cd server
+- npm install
+- npm run start:all
 
 > This will start all microservices and the GraphQL gateway concurrently.
 
@@ -62,23 +62,23 @@ Inside the \`client/\` folder, you’ll find:
 
 **Student App**
 
-cd student-app
-npm install
-npm run deploy
+- cd student-app
+- npm install
+- npm run deploy
 
 
 **Vital App**
 
-cd vital-app
-npm install
-npm run deploy
+- cd vital-app
+- npm install
+- npm run deploy
 
 
 **Shell App**
 
-cd shell-app
-npm install
-npm run deploy
+- cd shell-app
+- npm install
+- npm run deploy
 
 
 ---
