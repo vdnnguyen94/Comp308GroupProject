@@ -1,7 +1,7 @@
 # COMP308 Project – Microservices with Microfrontend and GraphQL Gateway
 
 This project demonstrates a full-stack application using microservices architecture with a GraphQL gateway and client-side microfrontends.
-
+Please Read carefully.
 ---
 
 ## 📁 Project Setup
