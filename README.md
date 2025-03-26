@@ -13,10 +13,10 @@ Please Read carefully.
     cd COMP308Project
     \`\`\`
 
-2. Clone the repository:
+2. Pull the repository:
 
     \`\`\`
-    git clone https://github.com/vdnnguyen94/MicroServicesGraphQL.git .
+    git pull https://github.com/vdnnguyen94/MicroServicesGraphQL.git .
     \`\`\`
 
 ---
