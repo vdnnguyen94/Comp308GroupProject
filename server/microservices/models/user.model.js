@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   },
   city: {
     type: String,
-    enum: ['Hamilton', 'Kitchener', 'London', 'Windsor', 'Toronto'],
+    enum: ['Hamilton', 'Kitchener', 'London', 'Windsor', 'Toronto', 'Ottawa'],
     required: [true, 'City is required']
   },
   createdAt: {
