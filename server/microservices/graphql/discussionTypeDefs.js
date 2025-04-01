@@ -1,12 +1,12 @@
 const { gql } = require('graphql-tag');
 
 const discussionTypeDefs = gql`
-  type Query {
+  extend type Query {
     getDiscussions(city: String): [Discussion]
     getDiscussion(id: ID!): Discussion
   }
 
-  type Mutation {
+ extend type Mutation {
     createDiscussion(title: String!, content: String, city: String): Discussion
     addComment(discussionId: ID!, content: String!): Comment
     deleteDiscussion(id: ID!): DeleteResponse

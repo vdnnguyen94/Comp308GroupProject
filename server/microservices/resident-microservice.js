@@ -14,7 +14,8 @@ const config = require('../config.js');
 // Import your GraphQL pieces
 const userTypeDefs = require('./graphql/userTypeDefs.js');
 const userResolvers = require('./graphql/userResolver');
-
+const discussionTypeDefs = require('./graphql/discussionTypeDefs');
+const discussionResolvers = require('./graphql/discussionResolver');
 
 const app = express();
 const port = 3001;
@@ -84,7 +85,10 @@ app.use((req, res, next) => {
 //   mutation: studentResolvers, // Mutation type
 // });
 const server = new ApolloServer({
-  schema: buildSubgraphSchema([{ typeDefs: userTypeDefs, resolvers: userResolvers }]),
+  schema: buildSubgraphSchema([
+    { typeDefs: userTypeDefs, resolvers: userResolvers },
+    { typeDefs: discussionTypeDefs, resolvers: discussionResolvers }
+  ]),
   // schema,
   introspection: true, 
   context: ({ req, res }) => ({ req, res, user: req.user  }),
