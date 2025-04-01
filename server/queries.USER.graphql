@@ -1,0 +1,59 @@
+mutation {
+  createUser(
+    username: "test1"
+    email: "test1@gmail.com"
+    password: "qwe123"
+    fullName: "Testing 1"
+    city: "Toronto"
+  ) {
+    id
+    username
+    email
+    city
+  }
+}
+mutation {
+  login(email: "vannguyen@gmail.com", password: "qwe123") {
+    success
+    message
+  }
+}
+query {
+  isLoggedIn {
+    isLoggedIn
+    username
+  }
+}
+query{
+  getUserByToken {
+    id
+    email
+    username
+    fullName
+  }
+}
+query {
+  getUserByUsername(username: "vannguyen") {
+     username
+    email
+    city
+    fullName
+  } 
+   
+}
+
+mutation {
+  logout {
+    message
+  }
+}
+query {
+  getUsers {
+    username
+    email
+    city
+    fullName
+  }
+}
+
+

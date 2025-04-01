@@ -44,10 +44,11 @@ app.use(function(req, res, next) {
 // Create the Apollo Gateway
 const gateway = new ApolloGateway({
   serviceList: [
-    { name: 'student', url: 'http://localhost:3001/graphql' },
-    { name: 'vitalSigns', url: 'http://localhost:3002/graphql' },
-    { name: 'products', url: 'http://localhost:3003/graphql' },
-    { name: 'auth', url: 'http://localhost:3004/graphql' },
+    { name: 'residentApp', url: 'http://localhost:3001/graphql' },
+    // { name: 'student', url: 'http://localhost:3001/graphql' },
+    // { name: 'vitalSigns', url: 'http://localhost:3002/graphql' },
+    // { name: 'products', url: 'http://localhost:3003/graphql' },
+    // { name: 'auth', url: 'http://localhost:3004/graphql' },
   ],
   buildService({ name, url }) {
     return new RemoteGraphQLDataSource({
@@ -73,8 +74,8 @@ const gateway = new ApolloGateway({
 // Setup context for Apollo Server to handle authentication via JWT
 app.use((req, res, next) => {
   console.log("Debug: Cookies received:", req.cookies); 
-  console.log("Debug: Cookies School System:", req.cookies.SchoolSystem); 
-  const token = req.cookies[config.jwtSecret];
+  const token = req.cookies?.CommunityApp;
+  console.log("Debug: Community Cookie:", token); 
   // res.on('finish', () => {
   //   console.log('Response headers:', res.getHeaders());
   // });
