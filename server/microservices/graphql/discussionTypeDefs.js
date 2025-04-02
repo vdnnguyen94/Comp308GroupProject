@@ -11,6 +11,8 @@ const discussionTypeDefs = gql`
     addComment(discussionId: ID!, content: String!): Comment
     deleteDiscussion(id: ID!): DeleteResponse
     deleteComment(id: ID!): DeleteResponse
+    updateDiscussion(id: ID!, content: String!): Discussion
+    updateComment(id: ID!, content: String!): Comment
 
   }
 

@@ -1,0 +1,102 @@
+query {
+  getDiscussions {
+    id
+    title
+    content
+    city
+    createdAt
+    author {
+      username
+      fullName
+    }
+      comments {
+      id
+      content
+      createdAt
+      author {
+        username
+        fullName
+
+      }
+    }
+  }
+
+}
+query {
+  getDiscussions(city: "London") {
+    id
+    title
+    city
+  }
+}
+
+query {
+  getDiscussion(id: "DISCUSSION_ID") {
+    title
+    content
+    comments {
+      content
+      author {
+        username
+      }
+    }
+  }
+}
+
+
+mutation {
+  createDiscussion(
+    title: "TITLE",
+    content: """
+CONTENT
+""",
+    city: "Toronto"
+  ) {
+    id
+    title
+    createdAt
+  }
+}
+mutation {
+  addComment(
+    discussionId: "discussionID",
+    content: """
+CONTENT
+"""
+  ) {
+    id
+    content
+    createdAt
+    author {
+      username
+    }
+  }
+}
+mutation {
+  updateDiscussion(id: "DISCUSSION_ID", content: "Updated discussion content.") {
+    id
+    title
+    content
+  }
+}
+mutation {
+  updateComment(id: "COMMENT_ID", content: "Updated comment content.") {
+    id
+    content
+    createdAt
+  }
+}
+
+mutation {
+  deleteDiscussion(id: "DISCUSSION_ID") {
+    success
+    message
+  }
+}
+mutation {
+  deleteComment(id: "COMMENT_ID") {
+    success
+    message
+  }
+}
+

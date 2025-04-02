@@ -77,6 +77,29 @@ const discussionResolvers = {
   
     await comment.deleteOne();
     return { success: true, message: "Comment deleted" };
+  },
+  updateDiscussion: async (_, { id, content }, { user }) => {
+    if (!user) throw new Error("Login required");
+    const discussion = await Discussion.findById(id);
+    if (!discussion) throw new Error("Discussion not found");
+    if (String(discussion.author) !== user.id) throw new Error("Not authorized");
+  
+    discussion.content = content;
+    await discussion.save();
+    return discussion;
+  },
+  
+  updateComment: async (_, { id, content }, { user }) => {
+    if (!user) throw new Error("Login required");
+    const comment = await Comment.findById(id).populate('discussion');
+    if (!comment) throw new Error("Comment not found");
+  
+    const isAuthor = String(comment.author) === user.id;
+    if (!isAuthor) throw new Error("Not authorized");
+  
+    comment.content = content;
+    await comment.save();
+    return comment;
   }
   
   
