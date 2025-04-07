@@ -19,6 +19,7 @@ query {
 
       }
     }
+    summary
   }
 
 }
@@ -27,6 +28,7 @@ query {
     id
     title
     city
+    summary
   }
 }
 

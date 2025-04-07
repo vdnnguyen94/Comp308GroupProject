@@ -1,6 +1,7 @@
 const Discussion = require('../models/discussion.model');
 const Comment = require('../models/comment.model');
 const User = require('../models/user.model');
+const { generateDiscussionSummary } = require('./service.summary');
 
 const discussionResolvers = {
   Query: {
@@ -35,7 +36,74 @@ const discussionResolvers = {
       });
       await comment.save();
       return comment;
-    }
+    },
+    updateDiscussionSummary: async (_, { id }) => {
+      const discussion = await Discussion.findById(id);
+      if (!discussion) return null;
+    
+      const comments = await Comment.find({ discussion: id }).sort({ createdAt: 1 });
+    
+      const { summary } = await generateDiscussionSummary(
+        {
+          title: discussion.title,
+          content: discussion.content
+        },
+        comments
+      );
+    
+      discussion.summary = summary;
+      await discussion.save();
+      return discussion;
+    },
+    deleteDiscussion: async (_, { id }, { user }) => {
+      if (!user) throw new Error("Login required");
+      const discussion = await Discussion.findById(id);
+      if (!discussion) throw new Error("Discussion not found");
+      if (String(discussion.author) !== user.id) throw new Error("Not authorized");
+    
+      await Comment.deleteMany({ discussion: id });
+      await discussion.deleteOne();
+      return { success: true, message: "Discussion deleted" };
+    },
+    
+    deleteComment: async (_, { id }, { user }) => {
+      if (!user) throw new Error("Login required");
+      const comment = await Comment.findById(id).populate('discussion');
+      if (!comment) throw new Error("Comment not found");
+    
+      const isCommentOwner = String(comment.author) === user.id;
+      const isDiscussionOwner = String(comment.discussion.author) === user.id;
+    
+      if (!isCommentOwner && !isDiscussionOwner) {
+        throw new Error("Not authorized");
+      }
+    
+      await comment.deleteOne();
+      return { success: true, message: "Comment deleted" };
+    },
+    updateDiscussion: async (_, { id, content }, { user }) => {
+      if (!user) throw new Error("Login required");
+      const discussion = await Discussion.findById(id);
+      if (!discussion) throw new Error("Discussion not found");
+      if (String(discussion.author) !== user.id) throw new Error("Not authorized");
+    
+      discussion.content = content;
+      await discussion.save();
+      return discussion;
+    },
+    
+    updateComment: async (_, { id, content }, { user }) => {
+      if (!user) throw new Error("Login required");
+      const comment = await Comment.findById(id).populate('discussion');
+      if (!comment) throw new Error("Comment not found");
+    
+      const isAuthor = String(comment.author) === user.id;
+      if (!isAuthor) throw new Error("Not authorized");
+    
+      comment.content = content;
+      await comment.save();
+      return comment;
+    },
   },
 
   Discussion: {
@@ -52,55 +120,10 @@ const discussionResolvers = {
       return await Discussion.findById(comment.discussion);
     }
   },
-  deleteDiscussion: async (_, { id }, { user }) => {
-    if (!user) throw new Error("Login required");
-    const discussion = await Discussion.findById(id);
-    if (!discussion) throw new Error("Discussion not found");
-    if (String(discussion.author) !== user.id) throw new Error("Not authorized");
+
   
-    await Comment.deleteMany({ discussion: id });
-    await discussion.deleteOne();
-    return { success: true, message: "Discussion deleted" };
-  },
+
   
-  deleteComment: async (_, { id }, { user }) => {
-    if (!user) throw new Error("Login required");
-    const comment = await Comment.findById(id).populate('discussion');
-    if (!comment) throw new Error("Comment not found");
-  
-    const isCommentOwner = String(comment.author) === user.id;
-    const isDiscussionOwner = String(comment.discussion.author) === user.id;
-  
-    if (!isCommentOwner && !isDiscussionOwner) {
-      throw new Error("Not authorized");
-    }
-  
-    await comment.deleteOne();
-    return { success: true, message: "Comment deleted" };
-  },
-  updateDiscussion: async (_, { id, content }, { user }) => {
-    if (!user) throw new Error("Login required");
-    const discussion = await Discussion.findById(id);
-    if (!discussion) throw new Error("Discussion not found");
-    if (String(discussion.author) !== user.id) throw new Error("Not authorized");
-  
-    discussion.content = content;
-    await discussion.save();
-    return discussion;
-  },
-  
-  updateComment: async (_, { id, content }, { user }) => {
-    if (!user) throw new Error("Login required");
-    const comment = await Comment.findById(id).populate('discussion');
-    if (!comment) throw new Error("Comment not found");
-  
-    const isAuthor = String(comment.author) === user.id;
-    if (!isAuthor) throw new Error("Not authorized");
-  
-    comment.content = content;
-    await comment.save();
-    return comment;
-  }
   
   
 };
