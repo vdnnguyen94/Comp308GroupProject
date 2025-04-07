@@ -1,103 +1,72 @@
-import React , { useEffect, useState } from 'react';
-import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { useQuery, gql , useMutation  } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import UserComponent from './UserComponent';
-import StudentList from './StudentList';
-import StudentDetail from './StudentDetail';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './App.css'; // Import the CSS file
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
+import client from './apollo-client';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-const IS_LOGGED_IN = gql`
-  query {
-    isLoggedIn {
-      isLoggedIn
-      studentNumber
-    }
-  }
-`;
-const LOGOUT_MUTATION = gql`
-  mutation {
-    logOut {
-      message
-    }
-  }
-`;
+// Layout & pages
+import MainLayout from './layouts/MainLayout';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import DiscussionList from './pages/discussions/DiscussionList';
+import DiscussionDetail from './pages/discussions/DiscussionDetail';
+import CreateDiscussion from './pages/discussions/CreateDiscussion';
+import Profile from './pages/Profile';
 
-const App = () => {
-  const { data, loading, error,refetch  } = useQuery(IS_LOGGED_IN);
-  const [logout] = useMutation(LOGOUT_MUTATION);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [studentNumber, setStudentNumber] = useState(null);
+// ProtectedRoute component to guard routes
+const ProtectedRoute = ({ children }) => {
+  const { currentUser, loading } = useAuth(); 
+  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  if (!currentUser) return <Navigate to="/login" />;
+  
+  return children;
+};
 
-  useEffect(() => {
-    if (data) {
-      setIsLoggedIn(data.isLoggedIn.isLoggedIn);
-      setStudentNumber(data.isLoggedIn.studentNumber);
-    }
-  }, [data]);
-
-
-  const handleLogout = async () => {
-    try {
-      await logout();  // Trigger the logout mutation
-      setIsLoggedIn(false);  // Update local state to reflect the logout
-      alert("Logged out successfully!");  // Show window alert on successful logout
-      await refetch(); 
-      window.location.href = '/';
-    } catch (err) {
-      console.error("Error during logout", err);
-    }
-  };
-
+const AppContent = () => {
   return (
     <Router>
-      <div className="d-flex flex-column min-vh-100 min-vw-100 content-container">
-        <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-          <div className="container-fluid">
-            <Link className="navbar-brand text-white" to="/">Authentication App</Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                  <Link className="nav-link text-white" to="/">Student List</Link>
-                </li>
-              {!isLoggedIn ? (
-                  <>
-                <li className="nav-item">
-                  <Link className="nav-link text-white" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                      <Link className="nav-link text-white" to="/register">Register</Link>
-                    </li>
-                </>
-                ) : (
-                  <>
-                <li className="nav-item">
-                <Link className="nav-link text-white btn btn-link" to={`/students/${studentNumber}`}>MyAccount</Link>
-                </li>
-                <li className="nav-item">
-                      <button className="nav-link text-white btn btn-link" onClick={handleLogout}>Logout</button>
-                </li>
-                </>
-                )}
-
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-        <div className="my-4 flex-grow-1">
-          <Routes>
-          <Route path="/login" element={<UserComponent setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/" element={<StudentList />} />
-            <Route path="/students/:studentNumber" element={<StudentDetail />} />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        <Route path="/" element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }>
+          <Route index element={<Home />} />
+          <Route path="discussions" element={<DiscussionList />} />
+          <Route path="discussions/:id" element={<DiscussionDetail />} />
+          <Route path="discussions/create" element={<CreateDiscussion />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+      </Routes>
     </Router>
+    // <Router>
+    //   <Routes>
+    //     <Route path="/login" element={<Login />} />
+    //     <Route path="/register" element={<Register />} />
+        
+    //     <Route path="/" element={<MainLayout />}>
+    //       <Route index element={<Home />} />
+    //       <Route path="discussions" element={<DiscussionList />} />
+    //       <Route path="discussions/:id" element={<DiscussionDetail />} />
+    //       <Route path="discussions/create" element={<CreateDiscussion />} />
+    //       <Route path="profile" element={<Profile />} />
+    //     </Route>
+    //   </Routes>
+    // </Router>
+  );
+};
+
+const App = () => {
+  return (
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ApolloProvider>
   );
 };
 

@@ -1,0 +1,43 @@
+/* MainLayout.css */
+body {
+background-color: #f8f9fa;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar a:hover {
+color: #0d6efd;
+text-decoration: underline;
+}
+
+.user-info {
+background-color: #f1f3f5;
+border-radius: 999px;
+padding: 6px 14px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+display: flex;
+align-items: center;
+}
+
+.user-info button {
+transition: all 0.2s ease;
+}
+
+.user-info button:hover {
+background-color: #dc3545;
+color: white;
+border-color: #dc3545;
+}
+
+@media (max-width: 768px) {
+.navbar .container-fluid {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.user-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+}

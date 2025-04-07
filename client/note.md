@@ -1,6 +1,7 @@
 ```
 To run all your services at once, simply execute the following command in your terminal:
 npm run start:all
+npm run start:test 
 in the server folder.
 
 Then, run the user-app micro frontend using: npm run deploy
@@ -23,7 +24,7 @@ microfrontend to shell app
 ```
 
 ```
-I and Seyeon Jo will try our best to complete Resident User role (Can post local news, join discussions, and view community insights.). We will  create new models, graphqlq query and mutations. REPLACING student-microservice on PORT 3001. We may need extra help for AI part
+I and Seyeon Jo will try our best to complete Resident User role (Can post local news, join discussions, and view community insights.). We will  create new models, graphql query and mutations. REPLACING student-microservice on PORT 3001. We may need extra help for AI part
 [For Residents:]
 1. Local News & Discussions:
 - Users can post local updates, news, and discuss topics.

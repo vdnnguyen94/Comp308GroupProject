@@ -1,0 +1,295 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css');
+
+:root {
+  --primary: #ff85a2;
+  --primary-light: #ffe0e7;
+  --secondary: #82c4ff;
+  --secondary-light: #d8edff;
+  --success: #a5db8e;
+  --success-light: #e9f7e3;
+  --warning: #ffd876;
+  --warning-light: #fff7e1;
+  --danger: #ff9c9c;
+  --danger-light: #ffe8e8;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* Main container */
+.home-container {
+  padding: 20px;
+}
+
+/* Cute bubble header with bounce animation */
+.cute-bubble {
+  width: 90px;
+  height: 90px;
+  background-color: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.bubble-emoji {
+  font-size: 2.2rem;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Waving hand animation */
+.wave-hand {
+  display: inline-block;
+  animation: wave 2.5s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(16deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(16deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(16deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Subtitle with gradient text */
+.subtitle {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Main banner with soft background */
+.cute-banner {
+  background-color: white;
+  background-image: 
+    radial-gradient(var(--primary-light) 3px, transparent 3px),
+    radial-gradient(var(--secondary-light) 3px, transparent 3px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  background-repeat: repeat;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cute-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  opacity: 0.85;
+  z-index: -1;
+}
+
+/* Cute illustration placeholder */
+.cute-illustration {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 8px 25px -5px rgba(0,0,0,0.1);
+  border: 5px solid white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'%3E%3Crect width='220' height='220' rx='110' fill='%23FFF7FA'/%3E%3Cpath d='M110 165C141.48 165 167 139.48 167 108C167 76.5198 141.48 51 110 51C78.5198 51 53 76.5198 53 108C53 139.48 78.5198 165 110 165Z' fill='%23FFD1E0'/%3E%3Cpath d='M88 95C94.6274 95 100 89.6274 100 83C100 76.3726 94.6274 71 88 71C81.3726 71 76 76.3726 76 83C76 89.6274 81.3726 95 88 95Z' fill='white'/%3E%3Cpath d='M132 95C138.627 95 144 89.6274 144 83C144 76.3726 138.627 71 132 71C125.373 71 120 76.3726 120 83C120 89.6274 125.373 95 132 95Z' fill='white'/%3E%3Ccircle cx='88' cy='83' r='8' fill='%23FF85A2'/%3E%3Ccircle cx='132' cy='83' r='8' fill='%23FF85A2'/%3E%3Cpath d='M110 125C123.255 125 134 120.523 134 115C134 109.477 123.255 105 110 105C96.7452 105 86 109.477 86 115C86 120.523 96.7452 125 110 125Z' fill='%23FF85A2'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+
+/* Decorative elements */
+.decoration-dot {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.dot1 {
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary);
+  opacity: 0.3;
+  top: 20px;
+  right: 15%;
+}
+
+.dot2 {
+  width: 18px;
+  height: 18px;
+  background-color: var(--secondary);
+  opacity: 0.3;
+  bottom: 25px;
+  right: 25%;
+}
+
+.dot3 {
+  width: 8px;
+  height: 8px;
+  background-color: var(--success);
+  opacity: 0.4;
+  top: 40%;
+  left: 20px;
+}
+
+.circle1 {
+  width: 60px;
+  height: 60px;
+  border: 3px solid var(--primary);
+  opacity: 0.12;
+  bottom: -20px;
+  left: 15%;
+}
+
+.circle2 {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--secondary);
+  opacity: 0.15;
+  top: 15%;
+  left: 10%;
+}
+
+/* Feature cards */
+.feature-card {
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  z-index: -1;
+}
+
+.feature-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Cute icons with soft backgrounds */
+.cute-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.feature-card:hover .cute-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.chat-icon {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.help-icon {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.alert-icon {
+  background-color: var(--danger-light);
+  color: var(--danger);
+}
+
+/* Custom button styles */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #ff6a8e;
+  border-color: #ff6a8e;
+}
+
+.btn-outline-primary {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-success {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+.btn-outline-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .cute-illustration {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cute-bubble {
+    width: 70px;
+    height: 70px;
+  }
+  .bubble-emoji {
+    font-size: 1.8rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+}

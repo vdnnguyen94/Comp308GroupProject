@@ -1,5 +1,5 @@
 {
-  "name": "student-app",
+  "name": "resident-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,9 +13,12 @@
   "dependencies": {
     "@apollo/client": "^3.9.5",
     "@originjs/vite-plugin-federation": "^1.3.5",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.5",
+    "bootstrap-icons": "^1.11.3",
+    "date-fns": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
