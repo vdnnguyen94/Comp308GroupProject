@@ -102,3 +102,18 @@ mutation {
   }
 }
 
+mutation {
+  addComment(
+    discussionId: "67ec4e706e6c4e6c810fb5af",
+    content: """
+As of April 6, 2025, the Highway 401 construction at Highbury has been completed! 🎉 Additional lanes have been added, and the commute is noticeably smoother and quicker. People are really enjoying the improved layout, and traffic is flowing much better. Great to see the project wrapped up successfully!
+"""
+  ) {
+    id
+    content
+    createdAt
+    author {
+      username
+    }
+  }
+}
