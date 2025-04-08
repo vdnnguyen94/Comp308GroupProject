@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 // ProtectedRoute component to guard routes
 const ProtectedRoute = ({ children }) => {
   const { currentUser, loading } = useAuth(); 
+  console.log("🔐 AuthContext:", { currentUser, loading });
   if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
   if (!currentUser) return <Navigate to="/login" />;
   

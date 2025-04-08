@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const { data: authData } = useQuery(IS_LOGGED_IN);
-  const { data: userData, refetch } = useQuery(GET_USER, {
+  const { data: userData, loading: userLoading, refetch } = useQuery(GET_USER, {
+    fetchPolicy: 'no-cache',
     skip: !authData?.isLoggedIn?.isLoggedIn,
     onCompleted: (data) => {
       if (data?.getUserByToken) {
@@ -50,24 +51,28 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   });
-
-  const [logout] = useMutation(LOGOUT, {
-    onCompleted: () => {
-      setCurrentUser(null);
-    }
-  });
+  
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await client.mutate({ mutation: gql`mutation { logout { success } }` });
+      setCurrentUser(null);
+      navigate('/login');
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
+  
 
   useEffect(() => {
     if (authData?.isLoggedIn?.isLoggedIn) {
-      refetch();
-    } else {
-      setLoading(false);
+      refetch(); // try to fetch user if logged in
+    } else if (authData) {
+      setCurrentUser(null);
+      setLoading(false); // no user found
     }
   }, [authData, refetch]);
+  
 
   return (
     <AuthContext.Provider value={{ currentUser, loading, handleLogout, refetch }}>

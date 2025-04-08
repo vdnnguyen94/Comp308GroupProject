@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 
 const Home = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
+  console.log("🔐 AuthContext:", { currentUser, loading });
   return (
     <div className="container-fluid py-5 home-container">
       {/* Cute Header Section */}
