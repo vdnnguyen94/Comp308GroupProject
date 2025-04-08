@@ -190,21 +190,24 @@ const DiscussionDetail = () => {
           <span>{formatDistanceToNow(new Date(parseInt(discussion.createdAt)), { addSuffix: true })}</span>
         </div>
 
-        {discussion.summary && (
-          <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-md mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-lg font-semibold text-yellow-800"> AI Generated Summary</h2>
-              <button
-                onClick={() => updateSummary()}
-                disabled={updatingSummary}
-                className="px-3 py-1 text-sm bg-indigo-600  rounded hover:bg-indigo-700 disabled:opacity-50"
-              >
-                {updatingSummary ? 'Updating...' : 'Regenerate'}
-              </button>
-            </div>
-            <p className="text-gray-700 whitespace-pre-wrap">{discussion.summary}</p>
+        <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-md mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-lg font-semibold text-yellow-800"> AI Generated Summary</h2>
+            <button
+              onClick={() => updateSummary()}
+              disabled={updatingSummary}
+              className="px-3 py-1 text-sm bg-indigo-600  rounded hover:bg-indigo-700 disabled:opacity-50"
+            >
+              {updatingSummary ? 'Generating...' : discussion.summary ? 'Regenerate' : 'Generate'}
+            </button>
           </div>
-        )}
+
+          {discussion.summary ? (
+            <p className="text-gray-700 whitespace-pre-wrap">{discussion.summary}</p>
+          ) : (
+            <p className="text-gray-500 italic">No summary available. Click "Generate" to create one.</p>
+          )}
+        </div>
 
         <div className="prose max-w-none text-gray-700 mb-8">
           {discussion.content}
