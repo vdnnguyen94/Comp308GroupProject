@@ -52,12 +52,14 @@ export const AuthProvider = ({ children }) => {
     }
   });
   
-
+  const [logoutMutation] = useMutation(LOGOUT);
   const handleLogout = async () => {
     try {
-      await client.mutate({ mutation: gql`mutation { logout { success } }` });
-      setCurrentUser(null);
-      navigate('/login');
+      const res = await logoutMutation();
+      if (res?.data?.logout?.success) {
+        setCurrentUser(null);
+        navigate('/login');
+      }
     } catch (error) {
       console.error("Logout error:", error);
     }
