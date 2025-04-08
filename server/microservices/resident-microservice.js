@@ -12,7 +12,8 @@ const config = require('../config.js');
 
 
 // Import your GraphQL pieces
-const userTypeDefs = require('./graphql/userTypeDefs.js');
+
+const userTypeDefs =require('./graphql/userTypeDefs.js');
 const userResolvers = require('./graphql/userResolver');
 const discussionTypeDefs = require('./graphql/discussionTypeDefs');
 const discussionResolvers = require('./graphql/discussionResolver');
