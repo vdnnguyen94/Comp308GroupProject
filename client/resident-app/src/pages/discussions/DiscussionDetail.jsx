@@ -68,7 +68,13 @@ const DELETE_DISCUSSION = gql`
     }
   }
 `;
-
+const UPDATE_SUMMARY = gql`
+  mutation UpdateDiscussionSummary($id: ID!) {
+    updateDiscussionSummary(id: $id) {
+      summary
+    }
+  }
+`;
 const DiscussionDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -126,6 +132,10 @@ const DiscussionDetail = () => {
     await deleteComment({ variables: { id: commentId } });
     refetch(); // or update comments array manually
   }; 
+  const [updateSummary, { loading: updatingSummary }] = useMutation(UPDATE_SUMMARY, {
+    variables: { id: id },
+    onCompleted: () => refetch()
+  });
 
   if (loading) return <div className="flex justify-center items-center h-64">Loading discussion...</div>;
   if (!data?.getDiscussion) return <div className="text-center py-12">Discussion not found.</div>;
@@ -181,8 +191,18 @@ const DiscussionDetail = () => {
         </div>
 
         {discussion.summary && (
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-            <p className="text-blue-700">{discussion.summary}</p>
+          <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-md mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-lg font-semibold text-yellow-800"> AI Generated Summary</h2>
+              <button
+                onClick={() => updateSummary()}
+                disabled={updatingSummary}
+                className="px-3 py-1 text-sm bg-indigo-600  rounded hover:bg-indigo-700 disabled:opacity-50"
+              >
+                {updatingSummary ? 'Updating...' : 'Regenerate'}
+              </button>
+            </div>
+            <p className="text-gray-700 whitespace-pre-wrap">{discussion.summary}</p>
           </div>
         )}
 
