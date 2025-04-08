@@ -19,6 +19,10 @@ const discussionTypeDefs = require('./graphql/discussionTypeDefs');
 const discussionResolvers = require('./graphql/discussionResolver');
 const volunteerRequestTypeDefs = require('./graphql/volunteerRequestTypeDefs');
 const volunteerRequestResolver = require('./graphql/volunteerRequestResolver');
+const alertTypeDefs = require('./graphql/alertTypeDefs');
+const alertResolver = require('./graphql/alertResolver');
+
+
 const app = express();
 const port = 3001;
 
@@ -91,6 +95,7 @@ const server = new ApolloServer({
     { typeDefs: userTypeDefs, resolvers: userResolvers },
     { typeDefs: discussionTypeDefs, resolvers: discussionResolvers },
     { typeDefs: volunteerRequestTypeDefs, resolvers: volunteerRequestResolver },
+    { typeDefs: alertTypeDefs, resolvers: alertResolver },
   ]),
   // schema,
   introspection: true, 
