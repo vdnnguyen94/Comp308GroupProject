@@ -11,8 +11,7 @@ const config = require('./config');  // Your existing MongoDB config
 // Initialize an Express application
 const app = express();
 const port = 4000;
-app.use(cookieParser());
-app.use(express.json());
+
 // CORS Setup
 const allowedOrigins = [
   'http://localhost:3010', 
@@ -23,7 +22,19 @@ const allowedOrigins = [
   'https://sandbox.embed.apollographql.com',
 ];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 
+app.use(cookieParser());
+app.use(express.json());
 
 // Middleware to parse cookies and set the CORS headers dynamically
 
@@ -103,10 +114,6 @@ const server = new ApolloServer({
 setTimeout(async () => {
   await server.start();
   app.use('/graphql', 
-    cors({
-      origin: allowedOrigins, 
-      credentials: true,
-    }),
     expressMiddleware(server, { 
       context: async ({ req, res }) => ({ req, res, user: req.user || null })
     })
