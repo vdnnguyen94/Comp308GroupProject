@@ -1,43 +1,149 @@
-/* MainLayout.css */
-body {
-background-color: #f8f9fa;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+:root {
+    --primary: #ff85a2;
+    --primary-light: #ffe0e7;
+    --secondary: #82c4ff;
+    --secondary-light: #d8edff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --bg-light: #fafafa;
+    --border-subtle: #eaeaea;
+  }
+  
+  /* Main container */
+  .main-container {
+    background-color: var(--bg-light);
+    font-family: 'Nunito', sans-serif;
+  }
+  
+  /* Elegant navbar */
+  .elegant-navbar {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  /* Brand styling */
+  .brand-icon {
+    font-size: 1.3rem;
+  }
+  
+  .brand-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.2px;
+  }
+  
+  /* Navigation items */
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-item:hover {
+    color: var(--primary);
+  }
+  
+  .nav-icon {
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  /* User profile section */
+  .user-profile {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid var(--border-subtle);
+    border-radius: 50px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+  
+  .user-icon {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-right: 0.6rem;
+  }
+  
+  .username {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-right: 1rem;
+  }
+  
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 50px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  /* Footer */
+  .elegant-footer {
+    background-color: white;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+    text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .nav-links {
+      margin-bottom: 0.8rem;
+    }
+    
+    .user-profile {
+      padding: 0.4rem 0.8rem;
+    }
+    
+    .username {
+      font-size: 0.8rem;
+      margin-right: 0.8rem;
+    }
+  }
 
-.navbar a:hover {
-color: #0d6efd;
-text-decoration: underline;
-}
-
-.user-info {
-background-color: #f1f3f5;
-border-radius: 999px;
-padding: 6px 14px;
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-display: flex;
-align-items: center;
-}
-
-.user-info button {
-transition: all 0.2s ease;
-}
-
-.user-info button:hover {
-background-color: #dc3545;
-color: white;
-border-color: #dc3545;
-}
-
-@media (max-width: 768px) {
-.navbar .container-fluid {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.user-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-}
-}
+  /* Logo styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .community-logo {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-brand:hover .community-logo {
+    transform: scale(1.05);
+  }
+  
+  .footer-logo {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+  }
