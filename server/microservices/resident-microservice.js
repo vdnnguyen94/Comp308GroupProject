@@ -16,7 +16,8 @@ const userTypeDefs = require('./graphql/userTypeDefs.js');
 const userResolvers = require('./graphql/userResolver');
 const discussionTypeDefs = require('./graphql/discussionTypeDefs');
 const discussionResolvers = require('./graphql/discussionResolver');
-
+const volunteerRequestTypeDefs = require('./graphql/volunteerRequestTypeDefs');
+const volunteerRequestResolver = require('./graphql/volunteerRequestResolver');
 const app = express();
 const port = 3001;
 
@@ -87,7 +88,8 @@ app.use((req, res, next) => {
 const server = new ApolloServer({
   schema: buildSubgraphSchema([
     { typeDefs: userTypeDefs, resolvers: userResolvers },
-    { typeDefs: discussionTypeDefs, resolvers: discussionResolvers }
+    { typeDefs: discussionTypeDefs, resolvers: discussionResolvers },
+    { typeDefs: volunteerRequestTypeDefs, resolvers: volunteerRequestResolver },
   ]),
   // schema,
   introspection: true, 

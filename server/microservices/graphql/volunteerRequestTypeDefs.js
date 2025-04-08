@@ -46,6 +46,9 @@ type Volunteer {
     # HELP REQUEST
     createHelpRequest(city: String!, category: String, description: String): HelpRequest
     updateHelpRequestAnalysis(id: ID!): HelpRequest
+    closeHelpRequest(id: ID!): HelpRequest
+    deleteVolunteer(id: ID!): Boolean
+
   }
   
   input AvailabilityInput {
