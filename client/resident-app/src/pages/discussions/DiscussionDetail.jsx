@@ -170,7 +170,7 @@ const DiscussionDetail = () => {
                 <div key={comment.id} className="border-b border-gray-100 pb-4 last:border-0">
                   <div className="flex justify-between items-center mb-2">
                     <span className="font-medium text-gray-800">{comment.author?.username}</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500">  |  
                       {formatDistanceToNow(new Date(parseInt(comment.createdAt)), { addSuffix: true })}
                     </span>
                   </div>
