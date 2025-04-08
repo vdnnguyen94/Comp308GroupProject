@@ -4,24 +4,25 @@ import { useMutation, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContext';
 
 const CREATE_DISCUSSION = gql`
-  mutation CreateDiscussion($title: String!, $content: String!, $summary: String, $city: String!) {
-    createDiscussion(title: $title, content: $content, summary: $summary, city: $city) {
+  mutation CreateDiscussion($title: String!, $content: String!,  $city: String!) {
+    createDiscussion(title: $title, content: $content,  city: $city) {
       id
       title
     }
   }
 `;
+const CITIES = ['Hamilton', 'Kitchener', 'London', 'Windsor', 'Toronto', 'Ottawa'];
 
 const CreateDiscussion = () => {
+    const { currentUser } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
-    summary: '',
     content: '',
-    city: ''
+    city: currentUser?.city || 'Toronto'
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+
 
   const [createDiscussion, { loading }] = useMutation(CREATE_DISCUSSION, {
     onCompleted: (data) => {
@@ -48,17 +49,12 @@ const CreateDiscussion = () => {
       return;
     }
     
-    createDiscussion({
-      variables: {
-        ...formData,
-        city: formData.city || currentUser?.city || 'Toronto'
-      }
-    });
+    createDiscussion({ variables: formData });
   };
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="mb-6">
+      <div className="mb-10">
         <h1 className="text-2xl font-bold text-gray-800">Start a New Discussion</h1>
         <p className="text-gray-600">Share your thoughts, ask questions, or start a conversation with your community.</p>
       </div>
@@ -69,9 +65,9 @@ const CreateDiscussion = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-800 mb-1">
             Discussion Title *
           </label>
           <input
@@ -80,41 +76,29 @@ const CreateDiscussion = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
             placeholder="What's your discussion about?"
             required
           />
         </div>
         
-        <div>
-          <label htmlFor="summary" className="block text-sm font-medium text-gray-700 mb-1">
-            Short Summary (Optional)
-          </label>
-          <input
-            type="text"
-            id="summary"
-            name="summary"
-            value={formData.summary}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="A brief summary of your discussion"
-          />
-          <p className="mt-1 text-sm text-gray-500">This will appear at the top of your discussion.</p>
-        </div>
         
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-            City (Optional)
+            City *
           </label>
-          <input
-            type="text"
+          <select
             id="city"
             name="city"
-            value={formData.city || currentUser?.city || ''}
+            value={formData.city}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Which city is this discussion relevant to?"
-          />
+            required
+            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md"
+          >
+            {CITIES.map((city) => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
         </div>
         
         <div>
@@ -141,10 +125,11 @@ const CreateDiscussion = () => {
           >
             Cancel
           </button>
+        
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:bg-indigo-400"
+            className="btn btn-primary rounded-pill px-4 py-2 shadow-sm"
           >
             {loading ? 'Creating...' : 'Create Discussion'}
           </button>

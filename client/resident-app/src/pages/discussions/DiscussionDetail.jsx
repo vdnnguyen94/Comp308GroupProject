@@ -30,7 +30,22 @@ const GET_DISCUSSION = gql`
     }
   }
 `;
+const UPDATE_COMMENT = gql`
+  mutation UpdateComment($id: ID!, $content: String!) {
+    updateComment(id: $id, content: $content) {
+      id
+      content
+    }
+  }
+`;
 
+const DELETE_COMMENT = gql`
+  mutation DeleteComment($id: ID!) {
+    deleteComment(id: $id) {
+      success
+    }
+  }
+`;
 const ADD_COMMENT = gql`
   mutation AddComment($discussionId: ID!, $content: String!) {
     addComment(discussionId: $discussionId, content: $content) {
@@ -48,7 +63,8 @@ const ADD_COMMENT = gql`
 const DELETE_DISCUSSION = gql`
   mutation DeleteDiscussion($id: ID!) {
     deleteDiscussion(id: $id) {
-      id
+      success
+      message
     }
   }
 `;
@@ -59,6 +75,10 @@ const DiscussionDetail = () => {
   const { currentUser } = useAuth();
   const [commentContent, setCommentContent] = useState('');
   const [error, setError] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedContent, setEditedContent] = useState('');
+  const [updateComment] = useMutation(UPDATE_COMMENT);
+  const [deleteComment] = useMutation(DELETE_COMMENT);
 
   const { loading, data, refetch } = useQuery(GET_DISCUSSION, {
     variables: { id },
@@ -93,6 +113,19 @@ const DiscussionDetail = () => {
       deleteDiscussion({ variables: { id } });
     }
   };
+
+  const handleUpdate = async (commentId) => {
+    await updateComment({
+      variables: { id: commentId, content: editedContent }
+    });
+    setEditingCommentId(null);
+    refetch(); // or update cache manually
+  };
+  
+  const handleDelete = async (commentId) => {
+    await deleteComment({ variables: { id: commentId } });
+    refetch(); // or update comments array manually
+  }; 
 
   if (loading) return <div className="flex justify-center items-center h-64">Loading discussion...</div>;
   if (!data?.getDiscussion) return <div className="text-center py-12">Discussion not found.</div>;
@@ -167,14 +200,38 @@ const DiscussionDetail = () => {
           ) : (
             <div className="space-y-4">
               {discussion.comments.map((comment) => (
-                <div key={comment.id} className="border-b border-gray-100 pb-4 last:border-0">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-gray-800">{comment.author?.username}</span>
-                    <span className="text-sm text-gray-500">  |  
-                      {formatDistanceToNow(new Date(parseInt(comment.createdAt)), { addSuffix: true })}
-                    </span>
-                  </div>
-                  <p className="text-gray-700">{comment.content}</p>
+                <div key={comment.id} className="mb-4">
+                     <span className="font-medium text-gray-800">{comment.author?.username}  </span>
+                     <span className="text-sm text-gray-500">
+                       {formatDistanceToNow(new Date(parseInt(comment.createdAt)), { addSuffix: true })}
+                     </span>
+
+                  {editingCommentId === comment.id ? (
+                    <div>
+                      <textarea
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                        className="w-full border p-2 rounded mb-2"
+                      />
+                      <div className="flex gap-2">
+                        <button onClick={() => handleUpdate(comment.id)}>Save</button>
+                        <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p>{comment.content}</p>
+                  )}
+
+                  {comment.author.id === currentUser?.id && editingCommentId !== comment.id && (
+                    <div className="flex gap-2 mt-2">
+                      <button onClick={() => {
+                        setEditingCommentId(comment.id);
+                        setEditedContent(comment.content);
+                      }}>Edit</button>
+
+                      <button onClick={() => handleDelete(comment.id)}>Delete</button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
