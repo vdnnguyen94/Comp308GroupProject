@@ -51,7 +51,8 @@ const userResolvers = {
         maxAge: 86400000,
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'
+        //sameSite: 'None', 
         // sameSite: 'Lax'
       });
 
