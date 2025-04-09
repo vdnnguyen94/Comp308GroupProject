@@ -48,6 +48,7 @@ const allowedOrigins = (process.env.FRONTEND_ORIGINS ||
 console.log('✅ Allowed CORS Origins:', allowedOrigins);
 app.use(function(req, res, next) {
   const origin = req.headers.origin;
+  console.log("DEBUG RES🌐 Incoming request from:", origin);
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
   }

@@ -42,11 +42,12 @@ app.use(express.json());
 // Middleware to parse cookies and set the CORS headers dynamically
 
 app.use(function(req, res, next) {
-  console.log("Debug: Incoming request URL:", req.originalUrl);
+
   // console.log("Debug: Incoming request headers:", req.headers); 
   // console.log("Debug: Incoming request Origin:", req.headers.origin);  
   // console.log("Debug: Incoming request Referer:", req.headers.referer);
   const origin = req.headers.origin;  
+  console.log("DEBUG GATEWAY🌐 Incoming request from:", origin);
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);  
   }
