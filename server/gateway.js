@@ -11,7 +11,7 @@ require('dotenv').config();
 // Initialize an Express application
 const app = express();
 const port = 4000;
-
+app.set('trust proxy', 1);
 // CORS Setup
 // const allowedOrigins = [
 //   'http://localhost:3010', 
