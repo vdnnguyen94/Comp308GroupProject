@@ -24,6 +24,7 @@ const port = 4000;
 const allowedOrigins = (process.env.FRONTEND_ORIGINS ||
   'http://localhost:4000,http://localhost:3010,http://localhost:3011,http://localhost:3012,http://localhost:3013,http://localhost:3014,http://localhost:3015'
 ).split(',').map(o => o.trim());
+console.log('✅ Allowed CORS Origins:', allowedOrigins);
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
