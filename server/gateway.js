@@ -7,21 +7,23 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const config = require('./config');  // Your existing MongoDB config
-
+require('dotenv').config();
 // Initialize an Express application
 const app = express();
 const port = 4000;
 
 // CORS Setup
-const allowedOrigins = [
-  'http://localhost:3010', 
-  'http://localhost:3011', 
-  'http://localhost:3015', 
-  'http://localhost:4000', 
-  'https://studio.apollographql.com',
-  'https://sandbox.embed.apollographql.com',
-];
-
+// const allowedOrigins = [
+//   'http://localhost:3010', 
+//   'http://localhost:3011', 
+//   'http://localhost:3015', 
+//   'http://localhost:4000', 
+//   'https://studio.apollographql.com',
+//   'https://sandbox.embed.apollographql.com',
+// ];
+const allowedOrigins = (process.env.FRONTEND_ORIGINS ||
+  'http://localhost:4000,http://localhost:3010,http://localhost:3011,http://localhost:3012,http://localhost:3013,http://localhost:3014,http://localhost:3015'
+).split(',').map(o => o.trim());
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {

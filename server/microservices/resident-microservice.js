@@ -9,7 +9,7 @@ const compression = require('compression');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const config = require('../config.js');
-
+require('dotenv').config();
 
 // Import your GraphQL pieces
 
@@ -34,27 +34,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-const allowedOrigins = [
-  'http://localhost:3010',
-  'http://localhost:3001',
-  'http://localhost:3015',
-  'http://localhost:4000',
-  'https://studio.apollographql.com',
-  'https://sandbox.embed.apollographql.com',
-];
+// const allowedOrigins = [
+//   'http://localhost:3010',
+//   'http://localhost:3001',
+//   'http://localhost:3015',
+//   'http://localhost:4000',
+//   'https://studio.apollographql.com',
+//   'https://sandbox.embed.apollographql.com',
+// ];
+const allowedOrigins = (process.env.FRONTEND_ORIGINS ||
+  'http://localhost:4000,http://localhost:3010,http://localhost:3011,http://localhost:3012,http://localhost:3013,http://localhost:3014,http://localhost:3015'
+).split(',').map(o => o.trim());
 app.use(function(req, res, next) {
-  console.log("Debug: Incoming request URL:", req.originalUrl);
-  // console.log("Debug: Incoming request headers:", req.headers); 
-  // console.log("Debug: Incoming request Origin:", req.headers.origin);  
-  // console.log("Debug: Incoming request Referer:", req.headers.referer);
-  const origin = req.headers.origin;  
+  const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);  
+    res.header("Access-Control-Allow-Origin", origin);
   }
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-  });
+});
+// app.use(function(req, res, next) {
+//   // console.log("Debug: Incoming request URL:", req.originalUrl);
+//   // console.log("Debug: Incoming request headers:", req.headers); 
+//   // console.log("Debug: Incoming request Origin:", req.headers.origin);  
+//   // console.log("Debug: Incoming request Referer:", req.headers.referer);
+//   const origin = req.headers.origin;  
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin);  
+//   }
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+//   });
 
 // MongoDB Connection Setup
 mongoose.connect(config.mongoUri, { dbName: 'Comp308GroupProject' })
