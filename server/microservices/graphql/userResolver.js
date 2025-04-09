@@ -50,7 +50,8 @@ const userResolvers = {
         httpOnly: true,
         maxAge: 86400000,
         path: '/',
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None', 
         // sameSite: 'Lax'
       });
 
