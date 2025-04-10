@@ -9,7 +9,7 @@ const Home = () => {
   console.log("🔐 AuthContext:", { currentUser, loading });
   return (
     <div className="container-fluid py-5 home-container">
-      {/* Cute Header Section */}
+      {/* Header Section */}
       <section className="text-center mb-5">
         <div className="cute-bubble mb-4">
           <span className="bubble-emoji">🏡</span>
@@ -22,7 +22,7 @@ const Home = () => {
           Community Connect in {currentUser?.city || 'your neighborhood'}
         </p>
       </section>
-      {/* Main Banner with Cute Graphics */}
+      {/* Main Banner with Graphics */}
       <section className="cute-banner rounded-5 shadow-sm mb-5 p-4 p-md-5 position-relative">
         <div className="row align-items-center">
           <div className="col-lg-7 text-center text-lg-start mb-4 mb-lg-0">
@@ -43,14 +43,14 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* Cute decorative elements */}
+        {/* Decorative elements */}
         <div className="decoration-dot dot1"></div>
         <div className="decoration-dot dot2"></div>
         <div className="decoration-dot dot3"></div>
         <div className="decoration-circle circle1"></div>
         <div className="decoration-circle circle2"></div>
       </section>
-      {/* Feature Cards with Cute Icons */}
+      {/* Feature Cards with Icons */}
       <div className="row g-4 justify-content-center">
         <div className="col-md-4">
           <div className="card border-0 feature-card h-100">
@@ -78,8 +78,8 @@ const Home = () => {
               <p className="text-muted small mb-3">
                 Request assistance or offer help to those living nearby.
               </p>
-              <Link to="/help-requests" className="btn btn-sm btn-outline-success rounded-pill px-3">
-                Coming Soon
+              <Link to="/help" className="btn btn-sm btn-outline-success rounded-pill px-3">
+                Help Center
               </Link>
             </div>
           </div>

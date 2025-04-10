@@ -14,6 +14,12 @@ import DiscussionDetail from './pages/discussions/DiscussionDetail';
 import CreateDiscussion from './pages/discussions/CreateDiscussion';
 import Profile from './pages/Profile';
 
+// Import Help pages
+import HelpIndex from './pages/help/HelpIndex';
+import NewHelpRequest from './pages/help/NewHelpRequest';
+import HelpRequestDetail from './pages/help/HelpRequestDetail';
+import VolunteerForm from './pages/help/VolunteerForm';
+
 // ProtectedRoute component to guard routes
 const ProtectedRoute = ({ children }) => {
   const { currentUser, loading } = useAuth(); 
@@ -41,23 +47,15 @@ const AppContent = () => {
           <Route path="discussions/:id" element={<DiscussionDetail />} />
           <Route path="discussions/create" element={<CreateDiscussion />} />
           <Route path="profile" element={<Profile />} />
+          
+          {/* Help Pages Routes */}
+          <Route path="help" element={<HelpIndex />} />
+          <Route path="help/new" element={<NewHelpRequest />} />
+          <Route path="help/:id" element={<HelpRequestDetail />} />
+          <Route path="help/volunteer" element={<VolunteerForm />} />
         </Route>
       </Routes>
     </Router>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/login" element={<Login />} />
-    //     <Route path="/register" element={<Register />} />
-        
-    //     <Route path="/" element={<MainLayout />}>
-    //       <Route index element={<Home />} />
-    //       <Route path="discussions" element={<DiscussionList />} />
-    //       <Route path="discussions/:id" element={<DiscussionDetail />} />
-    //       <Route path="discussions/create" element={<CreateDiscussion />} />
-    //       <Route path="profile" element={<Profile />} />
-    //     </Route>
-    //   </Routes>
-    // </Router>
   );
 };
 
