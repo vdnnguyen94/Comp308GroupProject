@@ -94,8 +94,8 @@ const Home = () => {
               <p className="text-muted small mb-3">
                 Stay updated with important news and emergency situations in your area.
               </p>
-              <Link to="/emergency-alerts" className="btn btn-sm btn-outline-danger rounded-pill px-3">
-                Coming Soon
+              <Link to="/alerts" className="btn btn-sm btn-outline-danger rounded-pill px-3">
+                View Alerts
               </Link>
             </div>
           </div>

@@ -1,6 +1,11 @@
 const Alert = require('../models/alert.model');
 
 const alertResolver = {
+
+  Alert: {
+    createdAt: (alert) => alert.createdAt.toISOString(),
+  },
+
   Query: {
     getActiveAlerts: async (_, { city }, { user }) => {
       return await Alert.find({
